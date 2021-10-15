@@ -1,17 +1,14 @@
-import requests
-from source.database.connection import Connection
-from source.libs.redis import Redis
+from flask import Flask
+from app.source.services.product import save, findAll
 
-connect = Connection()
-redis = Redis()
+app = Flask(__name__)
 
-r = requests.get('https://reqres.in/api/users')
-data = r.json()
 
-userId = data['data'][1]['id']
+@app.route('/')
+def index():
+    products = findAll()
+    return products
 
-redis.insert(userId, data['data'][1])
 
-for user in data['data']:
-    connect.insertOne('products', user)
-    print(f'\nUser {user["id"]} has been successful inserted')
+if __name__ == '__main__':
+    app.run(host='localhost', port=5600)
