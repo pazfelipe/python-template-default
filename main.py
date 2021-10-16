@@ -1,14 +1,9 @@
 from flask import Flask
-from app.source.services.product import save, findAll
+from app.source.routes.product import product
 
 app = Flask(__name__)
 
-
-@app.route('/')
-def index():
-    products = findAll()
-    return products
-
+app.register_blueprint(product)
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5600)

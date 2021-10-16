@@ -25,5 +25,7 @@ class Product:
         self.collection.insert_one(data)
 
     def findAll(self, filter=None):
-        products = self.collection.find({}, filter)
-        return list(products)
+        return list(self.collection.find({}, filter))
+
+    def findById(self, filter, projection=None):
+        return self.collection.find_one(filter, projection)
